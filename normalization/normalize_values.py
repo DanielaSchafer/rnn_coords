@@ -7,10 +7,6 @@ import os
 import re
 
 
-
-
-
-
 #------------------------------------------------------------------------------------
 #--------------------------------NORMALIZATION---------------------------------------
 #------------------------------------------------------------------------------------
@@ -181,7 +177,7 @@ def unnormalize_results(data_list, min_val, max_val, avg):
 #parses results file into a dict
 #converts values in results file with the normalization values from the info file
 #creates new file with unnormalized results
-def unnormalize_file(out_file, info_dict):
+def unnormalize_file(out_file, master_info_dicts):
 
 	#returns dict of result values
 	out = read_result_file(out_file)
@@ -190,8 +186,10 @@ def unnormalize_file(out_file, info_dict):
 	
 	#converts each value
 	for counter, line in enumerate(out):
-		#unnormalizes value and adds it to list of new values
-		new_out = unnormalize_results(line, info_dict["min"], info_dict["max"], info_dict["avg"])
+		for val in line:
+			#find a way to keep track of columns that correspond to each fold
+			#unnormalizes value and adds it to list of new values
+			new_out = unnormalize_results(line, info_dict["min"], info_dict["max"], info_dict["avg"])
 		new_list.append(new_out)
 		print(new_out)
 	
@@ -211,6 +209,7 @@ def read_info_folder(folder_path):
 	fold_labels = dict()
 
 	files = p_info_file.findall(os.listdir(folder_path))
+
 	for filename in files:
 		#gets dict of info vals 
 		info = read_info(filename)
@@ -221,8 +220,43 @@ def read_info_folder(folder_path):
 		#adds to dict
 		fold_labels[f_label] = info
 	return fold_labels
+
+
+def get_results_files(results_folder):
+	#returns list of file paths
+	train = "";
+	test = "";	
+	p_train = re.compile()
+
+	files = os.listdir(results_folder)
+	for f in files:
+		if p_train.match(f):
+			train = f
+		else:
+			test = f
+	
+	return train, test
 		
-		
+
+#returns a dict of dicts of the normalization values of each fold
+def make_master_info_dict(info_files):
+
+	master = dict()	
+
+	for f in info_files:	
+		info = read_info(f)
+		master[f] = info
+
+	return master
+	
+#find a way to separate train and test vals	
+def master_unnormalize(folder_path, results_folder):
+	train, test = get_results_files(results_folder)
+	fold_info_files = read_info_folder(folder_path)
+	master_info_dict = make_master_info_dict(fold_info_files)
+
+	for results_file in results_files:
+		unnormalize_file(results_file)
 		
 	
 
