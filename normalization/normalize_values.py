@@ -223,7 +223,7 @@ def read_info_folder(folder_path):
 
 
 def get_results_files(results_folder):
-	#returns list of file paths
+	_#returns list of file paths
 	train = "";
 	test = "";	
 	p_train = re.compile()
@@ -258,7 +258,11 @@ def master_unnormalize(folder_path, results_folder):
 	for results_file in results_files:
 		unnormalize_file(results_file)
 		
-	
+def unnormalize_one_val(val, info_file):
+    info_dict = read_info(info_file)
+
+    new = val*(info_dict[max_val]-info_dict[min_val])+info_dict[avg]
+    print(new)
 
 		
 		
