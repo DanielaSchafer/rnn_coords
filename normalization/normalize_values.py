@@ -90,7 +90,7 @@ def get_file(types_file):
 	return lines, energies
 
 
-def read_info_folder(folder_path):
+#def read_info_folder(folder_path):
 	
 
 def get_normalized_file(types_file):
@@ -267,7 +267,7 @@ def unnormalize_one_val(val, info_file):
 		
 		
 
-unnormalize_file("/net/pulsar/home/koes/dschafer/atomization_energies/fold_files/normalized_folds3sdf-t0.8/normalization_info-test0.txt", "/net/pulsar/home/koes/dschafer/atomization_energies/scripts/normalized_values/no_rotation_normalized/test")
+#unnormalize_file("/net/pulsar/home/koes/dschafer/atomization_energies/fold_files/normalized_folds3sdf-t0.8/normalization_info-test0.txt", "/net/pulsar/home/koes/dschafer/atomization_energies/scripts/normalized_values/no_rotation_normalized/test")
 #read_result_files("/net/pulsar/home/koes/dschafer/atomization_energies/scripts/normalized_values/no_rotation_normalized/test")		
 
 #lines, energies = get_normalized_file("/net/pulsar/home/koes/dschafer/atomization_energies/fold_files/normalized_folds3sdf-t0.8/test0.types")
