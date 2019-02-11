@@ -81,6 +81,8 @@ def get_file(types_file):
 	lines = list()
 	energies = list()
 	
+	print(types_file)
+	
 	for line in data:
 		lines.append(line)
 		

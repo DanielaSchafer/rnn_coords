@@ -16,18 +16,21 @@ def get_dataset_vals(train, test, path):
 	
 	min_val, max_val, average = get_average_min_max(total_vals)
 
-	types = get_files(path)
 
 	new_folder = path+"normalized/"
+
+	new_types = get_newfiles(path, new_folder)
+
+	types = get_files(path)
 	
 	try: 
 		os.mkdir(new_folder)
 	except OSError:
 		print(new_folder+" already exists")
 
-	for f in types:
+	for index, f in enumerate(types):
 		new_lines = normalize_file(min_val, max_val, average, f)	
-		write_file(new_folder,f, new_lines)
+		write_file(new_types[index], new_lines)
 
 
 	with open(path+"normalization_info.txt",'w+') as new_info:
@@ -48,8 +51,7 @@ def normalize_file(min_val, max_val, average, types_file):
 	return new_line_list
 
 
-def write_file(old_path, new_path, lines):
-	new_path = old_path+"_normalized.types"
+def write_file(new_path, lines):
 	with open(new_path, 'w+') as new_fold:
 		new_fold.writelines(lines)
 
@@ -59,6 +61,14 @@ def get_files(path):
 		print(path+filename)
 		if filename.endswith(".types"):
 			files.append(path+filename)
+	return files
+
+def get_newfiles(path, new_path):
+	files = list()
+	for filename in os.listdir(path):
+		print(new_path+filename)
+		if filename.endswith(".types"):
+			files.append(new_path+filename)
 	return files
 
 path = "/net/pulsar/home/koes/dschafer/atomization_energies/fold_files/folds3sdf-t0.8/"
